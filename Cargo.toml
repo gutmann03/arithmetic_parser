@@ -3,6 +3,7 @@ name = "my_parser_kma_group3_Smetaniuk"
 version = "0.1.0"
 edition = "2021"
 description = "Parser for education purpose."
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
