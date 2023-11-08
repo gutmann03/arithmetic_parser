@@ -1,0 +1,13 @@
+integer = @{ ASCII_DIGIT+ }
+
+atom = _{ integer }
+
+bin_op = _{ add | subtract | multiply | divide }
+	add = { "+" }
+	subtract = { "-" }
+	multiply = { "*" }
+	divide = { "/" }
+
+expr = { atom ~ (bin_op ~ atom)* }
+
+WHITESPACE = _{ " " | "\t" }

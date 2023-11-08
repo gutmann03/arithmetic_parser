@@ -1,9 +1,6 @@
-peg::parser!{
-    pub grammar list_parser() for str {
-      rule number() -> u32
-        = n:$(['0'..='9']+) {? n.parse().or(Err("u32")) }
-  
-      pub rule list() -> Vec<u32>
-        = "[" l:(number() ** ",") "]" { l }
-    }
-  }
+pub use pest::Parser;
+pub use pest_derive::Parser;
+
+#[derive(pest_derive::Parser)]
+#[grammar = "./calc.pest"]
+pub struct MyParser;

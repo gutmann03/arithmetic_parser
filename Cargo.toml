@@ -1,11 +1,15 @@
 [package]
 name = "my_parser_kma_group3_Smetaniuk"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
-description = "Parser for education purpose."
+description = "Arithmetic expression calculator parser."
+readme = "README.md"
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+anyhow = "1.0.75"
 peg = "0.8.2"
+pest = "2.7.5"
+pest_derive = "2.7.5"
