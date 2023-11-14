@@ -1,5 +1,5 @@
 use anyhow::anyhow;
-use my_parser_kma_group3_smetaniuk::*;
+use arithmetic_parser_smetaniuk::*;
 use pest::Parser;
 
 #[test]

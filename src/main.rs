@@ -1,4 +1,4 @@
-use my_parser_kma_group3_smetaniuk::*;
+use arithmetic_parser_smetaniuk::*;
 
 fn main() -> Result<(), MyError> {
     cli::run()

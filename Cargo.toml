@@ -1,5 +1,5 @@
 [package]
-name = "my_parser_kma_group3_smetaniuk"
+name = "arithmetic_parser_smetaniuk"
 version = "0.1.1"
 edition = "2021"
 description = "Arithmetic expression calculator parser."

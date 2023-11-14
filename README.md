@@ -1,4 +1,4 @@
-# my_parser_kma_group3_smetaniuk
+# arithmetic_parser_smetaniuk
 
 Arithmetic expression calculator parser.
 

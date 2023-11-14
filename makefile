@@ -1,4 +1,4 @@
-prog :=my_parser_kma_group3_smetaniuk
+prog :=arithmetic_parser_smetaniuk
 
 debug ?=
 

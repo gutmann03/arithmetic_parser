@@ -57,6 +57,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a4668cab20f66d8d020e1fbc0ebe47217433c1b6c8f2040faf858554e394ace6"
 
 [[package]]
+name = "arithmetic_parser_smetaniuk"
+version = "0.1.1"
+dependencies = [
+ "anyhow",
+ "clap",
+ "lazy_static",
+ "peg",
+ "pest",
+ "pest_derive",
+ "thiserror",
+]
+
+[[package]]
 name = "block-buffer"
 version = "0.10.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -179,19 +192,6 @@ name = "memchr"
 version = "2.6.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f665ee40bc4a3c5590afb1e9677db74a508659dfd71e126420da8274909a0167"
-
-[[package]]
-name = "my_parser_kma_group3_smetaniuk"
-version = "0.1.1"
-dependencies = [
- "anyhow",
- "clap",
- "lazy_static",
- "peg",
- "pest",
- "pest_derive",
- "thiserror",
-]
 
 [[package]]
 name = "once_cell"
