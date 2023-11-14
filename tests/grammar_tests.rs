@@ -42,6 +42,24 @@ fn test_number() -> anyhow::Result<()> {
 }
 
 #[test]
+fn test_unary_minus() -> anyhow::Result<()> {
+    let pair = MyParser::parse(Rule::unary_minus, "-")?
+        .next()
+        .ok_or_else(|| anyhow!("no pair"))?;
+    assert_eq!(pair.as_str(), "-");
+    assert_eq!(pair.as_span().start(), 0);
+    assert_eq!(pair.as_span().end(), 1);
+
+    let pair = MyParser::parse(Rule::unary_minus, "x");
+    assert!(pair.is_err());
+
+    let pair = MyParser::parse(Rule::unary_minus, "");
+    assert!(pair.is_err());
+
+    Ok(())
+}
+
+#[test]
 fn test_primary() -> anyhow::Result<()> {
     let pair = MyParser::parse(Rule::primary, "8")?
         .next()

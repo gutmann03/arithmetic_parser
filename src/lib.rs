@@ -34,6 +34,15 @@ pub enum Expr {
     },
 }
 
+/// Parse the input pairs into an abstract syntax tree representing the expression.
+///
+/// # Arguments
+///
+/// * `pairs` - A sequence of tokens representing the input expression.
+///
+/// # Returns
+///
+/// An abstract syntax tree representing the parsed expression.
 pub fn parse_expr(pairs: Pairs<Rule>) -> Expr {
     PRATT_PARSER
         .map_primary(|primary| match primary.as_rule() {
@@ -62,6 +71,15 @@ pub fn parse_expr(pairs: Pairs<Rule>) -> Expr {
         .parse(pairs)
 }
 
+/// Evaluate the given expression and return the result.
+///
+/// # Arguments
+///
+/// * `expr` - An abstract syntax tree representing the expression to be evaluated.
+///
+/// # Returns
+///
+/// The numerical result of the evaluated expression.
 pub fn eval_expr(expr: Expr) -> f64 {
     match expr {
         Expr::Number(n) => n,
@@ -75,6 +93,15 @@ pub fn eval_expr(expr: Expr) -> f64 {
     }
 }
 
+/// Evaluate an expression from a string input and return the result.
+///
+/// # Arguments
+///
+/// * `s` - A string representing the expression to be evaluated.
+///
+/// # Returns
+///
+/// A Result containing the numerical result of the evaluated expression, or an error if parsing fails.
 pub fn eval_expr_from_string(s: &str) -> Result<f64, MyError> {
     let pairs = MyParser::parse(Rule::equation, s);
     match pairs {
@@ -86,6 +113,7 @@ pub fn eval_expr_from_string(s: &str) -> Result<f64, MyError> {
     }
 }
 
+/// MyError is an error type used to return errors from the parser.
 #[derive(Error, Debug)]
 pub enum MyError {
     #[error("io error")]
@@ -101,6 +129,7 @@ pub enum MyError {
     CLIError(String),
 }
 
+/// Op describes a mathematical operation.
 #[derive(Debug)]
 pub enum Op {
     Add,
@@ -109,6 +138,7 @@ pub enum Op {
     Divide,
 }
 
+/// cli ia a modul with cli implementation.
 pub mod cli {
     use super::*;
     use clap::Parser as ParserClap;
@@ -127,6 +157,7 @@ pub mod cli {
         file: Option<String>,
     }
 
+    /// run runs the programm.
     pub fn run() -> Result<(), MyError> {
         let args = Args::parse();
 
@@ -137,10 +168,13 @@ pub mod cli {
         }
 
         if args.console {
-            println!("Welcome to Arithmetic expression calculator parser. Type you expression below and press enter. To exit prss ctrl+C.");
+            println!("Welcome to Arithmetic expression calculator parser.\nType you expression below and press enter.\nTo exit enter ':q'.");
             for line in io::stdin().lock().lines() {
                 match line {
                     Ok(line) => {
+                        if line.contains(":q") {
+                            return Ok(());
+                        }
                         let result = eval_expr_from_string(&line);
                         match result {
                             Ok(result) => println!("{} = {}", &line, result),
@@ -163,10 +197,10 @@ pub mod cli {
                         let mut outs: Vec<String> = Vec::new();
 
                         for line in content.lines() {
-                            let result = eval_expr_from_string(&line)?;
+                            let result = eval_expr_from_string(line)?;
                             outs.push(format!("{} = {}", &line, result));
                         }
-                        match fs::write(file + &".out".to_string(), outs.join("\n")) {
+                        match fs::write(file + ".out", outs.join("\n")) {
                             Ok(_) => (),
                             Err(e) => return Err(MyError::IOError(e)),
                         }
