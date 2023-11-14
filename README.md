@@ -10,7 +10,8 @@ https://crates.io/crates/arithmetic_parser_smetaniuk
 
 ### Rules description
 // This rule describes a valid number, which can be integer or decimal.
-```number = @{
+```
+number = @{
     ("0" | ASCII_NONZERO_DIGIT ~ ASCII_DIGIT*)
     ~ ("." ~ ASCII_DIGIT*)?
 }
