@@ -5,37 +5,55 @@ Arithmetic expression calculator parser.
 ### Description
 This parser can be used to parse and calculate arithmetic expressions, including addition (+), subtraction (-), multiplication (*), division (/), and parentheses using operations.
 
+### Link to crates.io
+https://crates.io/crates/arithmetic_parser_smetaniuk
+
 ### Rules description
 // This rule describes a valid number, which can be integer or decimal.
-number = @{
+```number = @{
     ("0" | ASCII_NONZERO_DIGIT ~ ASCII_DIGIT*)
     ~ ("." ~ ASCII_DIGIT*)?
 }
+```
 
 // This rule represents the unary minus operator.
+```
 unary_minus = { "-" }
+```
 
 // This rule represents the primary expression, which can be a number or an enclosed expression.
+```
 primary = _{ number | "(" ~ expr ~ ")" }
+```
 
 // This rule represents the atom, which can be a primary expression with an optional unary minus.
+```
 atom = _{ unary_minus? ~ primary }
+```
 
 // This rule represents the binary operators, including add, subtract, multiply, and divide.
+```
 bin_op = _{ add | subtract | multiply | divide }
   add = { "+" }
   subtract = { "-" }
   multiply = { "*" }
   divide = { "/" }
+```
 
 // This rule represents the overall expression, composed of atoms and binary operators.
+```
 expr = { atom ~ (bin_op ~ atom)* }
+```
 
 // This rule represents an equation, starting and ending with specific markers and having an expression in between.
+```
 equation = _{ SOI ~ expr ~ EOI }
+```
 
 // This rule defines whitespace as a space character.
+```
 WHITESPACE = _{ " " }
+```
 
 ### Launching
 To run parset in console mode, please, run in command prompt next commands.
