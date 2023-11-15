@@ -1,4 +1,4 @@
-use arithmetic_parser_smetaniuk::*;
+use arithmetic_parser::*;
 
 fn main() -> Result<(), MyError> {
     cli::run()

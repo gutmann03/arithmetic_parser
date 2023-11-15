@@ -1,4 +1,4 @@
-prog :=arithmetic_parser_smetaniuk
+prog :=arithmetic_parser
 
 debug ?=
 

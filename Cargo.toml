@@ -1,5 +1,5 @@
 [package]
-name = "arithmetic_parser_smetaniuk"
+name = "arithmetic_parser"
 version = "0.1.2"
 edition = "2021"
 description = "Arithmetic expression calculator parser."

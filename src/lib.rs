@@ -32,6 +32,7 @@ pub enum Expr {
         op: Op,
         rhs: Box<Expr>,
     },
+    Unreachable,
 }
 
 /// Parse the input pairs into an abstract syntax tree representing the expression.
@@ -48,7 +49,7 @@ pub fn parse_expr(pairs: Pairs<Rule>) -> Expr {
         .map_primary(|primary| match primary.as_rule() {
             Rule::number => Expr::Number(primary.as_str().parse::<f64>().unwrap()),
             Rule::expr => parse_expr(primary.into_inner()),
-            rule => unreachable!("Expr::parse expected atom, found {:?}", rule),
+            _ => Expr::Unreachable,
         })
         .map_infix(|lhs, op, rhs| {
             let op = match op.as_rule() {
@@ -56,7 +57,7 @@ pub fn parse_expr(pairs: Pairs<Rule>) -> Expr {
                 Rule::subtract => Op::Subtract,
                 Rule::multiply => Op::Multiply,
                 Rule::divide => Op::Divide,
-                rule => unreachable!("Expr::parse expected infix operation, found {:?}", rule),
+                _ => Op::Invalid,
             };
             Expr::BinOp {
                 lhs: Box::new(lhs),
@@ -66,7 +67,7 @@ pub fn parse_expr(pairs: Pairs<Rule>) -> Expr {
         })
         .map_prefix(|op, rhs| match op.as_rule() {
             Rule::unary_minus => Expr::UnaryMinus(Box::new(rhs)),
-            _ => unreachable!(),
+            _ => Expr::Unreachable,
         })
         .parse(pairs)
 }
@@ -80,16 +81,18 @@ pub fn parse_expr(pairs: Pairs<Rule>) -> Expr {
 /// # Returns
 ///
 /// The numerical result of the evaluated expression.
-pub fn eval_expr(expr: Expr) -> f64 {
+pub fn eval_expr(expr: Expr) -> Result<f64, MyError> {
     match expr {
-        Expr::Number(n) => n,
-        Expr::UnaryMinus(expr) => -eval_expr(*expr),
+        Expr::Number(n) => Ok(n),
+        Expr::UnaryMinus(expr) => Ok(-(eval_expr(*expr)?)),
         Expr::BinOp { lhs, op, rhs } => match op {
-            Op::Add => eval_expr(*lhs) + eval_expr(*rhs),
-            Op::Subtract => eval_expr(*lhs) - eval_expr(*rhs),
-            Op::Multiply => eval_expr(*lhs) * eval_expr(*rhs),
-            Op::Divide => eval_expr(*lhs) / eval_expr(*rhs),
+            Op::Add => Ok(eval_expr(*lhs)? + eval_expr(*rhs)?),
+            Op::Subtract => Ok(eval_expr(*lhs)? - eval_expr(*rhs)?),
+            Op::Multiply => Ok(eval_expr(*lhs)? * eval_expr(*rhs)?),
+            Op::Divide => Ok(eval_expr(*lhs)? / eval_expr(*rhs)?),
+            Op::Invalid => Err(MyError::UnreachableError)
         },
+        Expr::Unreachable => Err(MyError::UnreachableError),
     }
 }
 
@@ -107,7 +110,7 @@ pub fn eval_expr_from_string(s: &str) -> Result<f64, MyError> {
     match pairs {
         Ok(mut pairs_) => {
             let expr = parse_expr(pairs_.next().unwrap().into_inner());
-            Ok(eval_expr(expr))
+            Ok(eval_expr(expr)?)
         }
         Err(e) => Err(MyError::ParseError(e.to_string())),
     }
@@ -127,6 +130,9 @@ pub enum MyError {
 
     #[error("cli error")]
     CLIError(String),
+
+    #[error("ureachale error")]
+    UnreachableError,
 }
 
 /// Op describes a mathematical operation.
@@ -136,6 +142,7 @@ pub enum Op {
     Subtract,
     Multiply,
     Divide,
+    Invalid,
 }
 
 /// cli ia a modul with cli implementation.

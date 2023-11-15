@@ -1,4 +1,4 @@
-# arithmetic_parser_smetaniuk
+# arithmetic_parser
 
 Arithmetic expression calculator parser.
 
@@ -6,7 +6,7 @@ Arithmetic expression calculator parser.
 This parser can be used to parse and calculate arithmetic expressions, including addition (+), subtraction (-), multiplication (*), division (/), and parentheses using operations.
 
 ### Link to crates.io
-https://crates.io/crates/arithmetic_parser_smetaniuk
+https://crates.io/crates/arithmetic_parser
 
 ### Rules description
 // This rule describes a valid number, which can be integer or decimal.
