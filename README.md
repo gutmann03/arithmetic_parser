@@ -6,7 +6,7 @@ Arithmetic expression calculator parser.
 This parser can be used to parse and calculate arithmetic expressions, including addition (+), subtraction (-), multiplication (*), division (/), and parentheses using operations.
 
 ### Link to crates.io
-https://crates.io/crates/arithmetic_parser
+https://crates.io/crates/arithmetic_parser_kma
 
 ### Rules description
 // This rule describes a valid number, which can be integer or decimal.
