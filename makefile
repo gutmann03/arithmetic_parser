@@ -1,4 +1,4 @@
-prog :=arithmetic_parser
+prog :=arithmetic_parser_kma
 
 debug ?=
 
